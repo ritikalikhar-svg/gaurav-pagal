@@ -2,163 +2,146 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Will You Be My Valentine? 💖</title>
+
+<!-- mobile full screen fit -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Friend Detector 😈</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins', sans-serif;
+
+html,body{
+height:100%;
+width:100%;
+margin:0;
+padding:0;
+font-family:sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-body{
-    background: linear-gradient(135deg,#ff5f9e,#ff9a9e);
-    overflow:hidden;
+/* fullscreen container */
+.wrapper{
+height:100vh;
+width:100vw;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:15px;
+box-sizing:border-box;
 }
 
-.slide{
-    display:none;
-    height:100vh;
-    width:100%;
-    color:white;
-    text-align:center;
-    padding:40px;
+.card{
+width:100%;
+max-width:420px;
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 30px rgba(0,0,0,0.2);
+animation:pop .6s ease;
 }
 
-.slide.active{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    animation:fade 1s;
+@keyframes pop{
+from{transform:scale(.7);opacity:0;}
+to{transform:scale(1);opacity:1;}
 }
-
-h1{ font-size:3rem; margin-bottom:15px; }
-p{ font-size:1.3rem; max-width:600px; }
 
 button{
-    margin:15px;
-    padding:15px 30px;
-    font-size:1.1rem;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    background:white;
-    color:#ff3b7a;
-    font-weight:bold;
+padding:14px 25px;
+margin-top:12px;
+border:none;
+border-radius:25px;
+font-size:16px;
+cursor:pointer;
+background:#ff4b7d;
+color:white;
+width:100%;
 }
 
-button:hover{ transform:scale(1.05); }
-
-#msg{
-    margin-top:20px;
-    font-size:1.2rem;
-    min-height:60px;
+input{
+padding:12px;
+border-radius:20px;
+border:1px solid #ccc;
+margin-bottom:15px;
+width:100%;
+text-align:center;
+font-size:16px;
 }
 
-/* hearts */
-.heart{
-    position:absolute;
-    animation:fall linear infinite;
-}
+.hidden{display:none;}
 
-@keyframes fall{
-    from{ transform:translateY(-10vh); }
-    to{ transform:translateY(110vh); }
-}
-
-@keyframes fade{
-    from{ opacity:0; }
-    to{ opacity:1; }
-}
 </style>
 </head>
 
 <body>
 
-<!-- Slide 1 -->
-<div class="slide active">
-    <h1>Hey Love ❤️</h1>
-    <p>I made something special just for you…</p>
-    <button onclick="nextSlide()">Next ➡️</button>
+<div class="wrapper">
+
+<div id="start" class="card">
+<h2>Friend Scan Machine 🤖</h2>
+<p>Apna naam daalo 😏</p>
+<input type="text" id="name" placeholder="Type name">
+<button onclick="scan()">Scan</button>
 </div>
 
-<!-- Slide 2 -->
-<div class="slide">
-    <h1>You Mean A Lot 💕</h1>
-    <p>Every moment with you makes my world brighter.</p>
-    <button onclick="nextSlide()">Next ➡️</button>
+<div id="stage1" class="card hidden">
+<h2>Scanning… 🧠</h2>
+<p id="msg"></p>
+<button onclick="next()">Next</button>
 </div>
 
-<!-- Slide 3 -->
-<div class="slide">
-    <h1>One Last Thing 💌</h1>
-    <p>Please don’t break my heart 😢</p>
-    <button onclick="nextSlide()">Reveal 💖</button>
+<div id="stage2" class="card hidden">
+<h2>Result aa gaya 😳</h2>
+<p>
+• Overacting level: High 🤭 <br>
+• Food lover 🍔 <br>
+• Drama: 98% 🎭
+</p>
+<button onclick="final()">Continue</button>
 </div>
 
-<!-- Slide 4 -->
-<div class="slide">
-    <h1>Will You Be My Valentine? 🌹</h1>
+<div id="final" class="card hidden">
+<h1>Prank done 😈</h1>
+<p>
+Thoda irritate karta hai…  
+thoda pagal hai…  
+but best friend hai 💙
+</p>
+<h3>Friendship Level: 100%</h3>
+</div>
 
-    <div>
-        <button onclick="yes()">YES 💖</button>
-        <button onclick="no()">NO 😢</button>
-    </div>
-
-    <p id="msg"></p>
 </div>
 
 <script>
-let slides = document.querySelectorAll(".slide");
-let index = 0;
 
-function nextSlide(){
-    slides[index].classList.remove("active");
-    index++;
-    slides[index].classList.add("active");
+function scan(){
+let name=document.getElementById("name").value;
+if(name==""){
+alert("Naam likh 😤");
+return;
+}
+start.classList.add("hidden");
+stage1.classList.remove("hidden");
+document.getElementById("msg").innerHTML=name+" ka brain scan ho raha hai...";
 }
 
-/* emotional messages */
-let messages = [
-    "Please don’t say no… my heart chose you 🥺💔",
-    "Are you sure? I was really hoping it would be YES 😢",
-    "One chance… I promise I’ll make you smile 💕",
-    "My heart will wait till you say YES 💖",
-    "Okay… last try, don’t break my heart 😭🌹"
-];
-
-let msgIndex = 0;
-
-function no(){
-    document.getElementById("msg").innerText = messages[msgIndex];
-    msgIndex = (msgIndex + 1) % messages.length;
+function next(){
+stage1.classList.add("hidden");
+stage2.classList.remove("hidden");
 }
 
-function yes(){
-    document.body.innerHTML = `
-    <div style="height:100vh;display:flex;
-    flex-direction:column;justify-content:center;
-    align-items:center;color:white;text-align:center">
-        <h1>YAYYYY 😍💘</h1>
-        <p>You just made me the happiest person alive!</p>
-        <h2>Happy Valentine’s Day 💕</h2>
-    </div>`;
+function final(){
+stage2.classList.add("hidden");
+document.getElementById("final").classList.remove("hidden");
 }
 
-/* heart rain */
-setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+10)+"px";
-    heart.style.animationDuration=(Math.random()*3+2)+"s";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
-},200);
 </script>
 
 </body>
 </html>
+
+
