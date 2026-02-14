@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine? 💖</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#ff5f9e,#ff9a9e);
+    overflow:hidden;
+}
+
+.slide{
+    display:none;
+    height:100vh;
+    width:100%;
+    color:white;
+    text-align:center;
+    padding:40px;
+}
+
+.slide.active{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    animation:fade 1s;
+}
+
+h1{ font-size:3rem; margin-bottom:15px; }
+p{ font-size:1.3rem; max-width:600px; }
+
+button{
+    margin:15px;
+    padding:15px 30px;
+    font-size:1.1rem;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    background:white;
+    color:#ff3b7a;
+    font-weight:bold;
+}
+
+button:hover{ transform:scale(1.05); }
+
+#msg{
+    margin-top:20px;
+    font-size:1.2rem;
+    min-height:60px;
+}
+
+/* hearts */
+.heart{
+    position:absolute;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{ transform:translateY(-10vh); }
+    to{ transform:translateY(110vh); }
+}
+
+@keyframes fade{
+    from{ opacity:0; }
+    to{ opacity:1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Slide 1 -->
+<div class="slide active">
+    <h1>Hey Love ❤️</h1>
+    <p>I made something special just for you…</p>
+    <button onclick="nextSlide()">Next ➡️</button>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide">
+    <h1>You Mean A Lot 💕</h1>
+    <p>Every moment with you makes my world brighter.</p>
+    <button onclick="nextSlide()">Next ➡️</button>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide">
+    <h1>One Last Thing 💌</h1>
+    <p>Please don’t break my heart 😢</p>
+    <button onclick="nextSlide()">Reveal 💖</button>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide">
+    <h1>Will You Be My Valentine? 🌹</h1>
+
+    <div>
+        <button onclick="yes()">YES 💖</button>
+        <button onclick="no()">NO 😢</button>
+    </div>
+
+    <p id="msg"></p>
+</div>
+
+<script>
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function nextSlide(){
+    slides[index].classList.remove("active");
+    index++;
+    slides[index].classList.add("active");
+}
+
+/* emotional messages */
+let messages = [
+    "Please don’t say no… my heart chose you 🥺💔",
+    "Are you sure? I was really hoping it would be YES 😢",
+    "One chance… I promise I’ll make you smile 💕",
+    "My heart will wait till you say YES 💖",
+    "Okay… last try, don’t break my heart 😭🌹"
+];
+
+let msgIndex = 0;
+
+function no(){
+    document.getElementById("msg").innerText = messages[msgIndex];
+    msgIndex = (msgIndex + 1) % messages.length;
+}
+
+function yes(){
+    document.body.innerHTML = `
+    <div style="height:100vh;display:flex;
+    flex-direction:column;justify-content:center;
+    align-items:center;color:white;text-align:center">
+        <h1>YAYYYY 😍💘</h1>
+        <p>You just made me the happiest person alive!</p>
+        <h2>Happy Valentine’s Day 💕</h2>
+    </div>`;
+}
+
+/* heart rain */
+setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+10)+"px";
+    heart.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+},200);
+</script>
+
+</body>
+</html>
